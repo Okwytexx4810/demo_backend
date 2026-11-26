@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: mini-note-backend
+    runtime: node
+    plan: 0.5c-512mb
+    region: oregon
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    disk:
+      name: mini-note-data
+      mountPath: /opt/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /opt/data
+      - key: CORS_ORIGIN
+        sync: false
